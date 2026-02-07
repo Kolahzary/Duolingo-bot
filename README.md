@@ -132,7 +132,6 @@ Examples:
 pnpm run switch-language -- Turkish
 pnpm run switch-language -- Spanish
 pnpm run switch-language -- French
-pnpm run switch-language -- Esperanto
 ```
 
 **Note:** Use the full language name as it appears in Duolingo (e.g., "Turkish", not "tr").
