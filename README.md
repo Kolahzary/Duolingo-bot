@@ -154,6 +154,7 @@ Decrypt `assets/state.bin` to `state/storageState.json`. Useful if you are resto
 pnpm run decrypt-state
 ```
 
+
 ## Security
 
 Your account security is paramount. If you follow the instructions above, your account is safe.
