@@ -1,0 +1,41 @@
+name: Update Last Activity
+
+on:
+  schedule:
+    - cron: "0 0 * * *" # Runs every day at midnight UTC
+  workflow_dispatch: # Allows manual triggering
+
+permissions:
+  contents: write # Required to push commits to the repository
+
+jobs:
+  update-activity:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Update last-activity.md
+        run: |
+          echo "# Last Activity" > last-activity.md
+          echo "Last updated on: $(date -u +'%Y-%m-%d %H:%M:%S UTC')" >> last-activity.md
+
+      - name: Commit and Push
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+
+          git add last-activity.md
+
+          # Check if there are staged changes
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+
+          git commit -m "chore: update last activity timestamp [skip ci]"
+
+          # Push directly to main, fail the workflow if this command fails
+          git push origin HEAD:main || exit 1
